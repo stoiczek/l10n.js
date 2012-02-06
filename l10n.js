@@ -101,12 +101,12 @@
 								continue;
 							}
 						}
-						
-						for (var message in localization) {
-							if (has_own_prop.call(localization, message)) {
-								localizations[locale][message] = localization[message];
-							}
-						}
+						localizations[locale] = flattenLocalizationObj(localization);
+//						for (var message in localization) {
+//							if (has_own_prop.call(localization, message)) {
+//								localizations[locale][message] = localization[message];
+//							}
+//						}
 					}
 				}
 			}
@@ -208,4 +208,22 @@
 		
 		return this_val;
 	};
+
+  function flattenLocalizationObj(obj) {
+    var result = {};
+    flattenRecursive('', obj, result, '.');
+    return result;
+  }
+
+  function flattenRecursive(pfx, src, target, separator) {
+    for(var k in src) {
+      var v = src[k];
+      if(typeof v === 'object') {
+        flattenRecursive(pfx + k + separator, v, target)
+      } else {
+        target[pfx + k] = v
+      }
+    }
+  }
+
 }());
