@@ -219,7 +219,7 @@
     for(var k in src) {
       var v = src[k];
       if(typeof v === 'object') {
-        flattenRecursive(pfx + k + separator, v, target)
+        flattenRecursive(pfx + k + separator, v, target, separator)
       } else {
         target[pfx + k] = v
       }
